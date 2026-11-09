@@ -1,0 +1,10 @@
+class,version,label,n
+neg,post,LITERAL,3
+neg,post,TWIG_EVALUATED,2
+neg,pre,LITERAL,3
+neg,pre,TWIG_EVALUATED,2
+observation,post,TWIG_EVALUATED,1
+observation,pre,TWIG_EVALUATED,1
+pos,post,LITERAL,6
+pos,pre,TWIG_ERROR,1
+pos,pre,TWIG_EVALUATED,5

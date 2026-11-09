@@ -1,0 +1,42 @@
+#!/usr/bin/env python3
+"""Regenerate results/ deterministically: python scripts/gen_results.py OUT."""
+import csv
+import hashlib
+import io
+import json
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
+from c9freeform import cases
+
+
+def main(out: Path) -> None:
+    out.mkdir(parents=True, exist_ok=True)
+    buf = io.StringIO()
+    w = csv.writer(buf, lineterminator="\n")
+    w.writerow(("id", "class", "version", "label", "decisions", "result"))
+    summary = {}
+    for c in cases.load():
+        for ver in ("pre", "post"):
+            label, res = cases.run(c, ver)
+            w.writerow((c["id"], c["class"], ver, label, cases.rules(c, ver),
+                        json.dumps(res)))
+            key = (c["class"], ver, label)
+            summary[key] = summary.get(key, 0) + 1
+    (out / "cases.csv").write_text(buf.getvalue(), encoding="utf-8")
+    buf = io.StringIO()
+    w = csv.writer(buf, lineterminator="\n")
+    w.writerow(("class", "version", "label", "n"))
+    for key in sorted(summary):
+        w.writerow((*key, summary[key]))
+    (out / "summary.csv").write_text(buf.getvalue(), encoding="utf-8")
+    sums = [f"{hashlib.sha256((out / n).read_bytes()).hexdigest()}  {n}"
+            for n in ("cases.csv", "summary.csv")]
+    (out / "SHA256SUMS").write_text("\n".join(sums) + "\n", encoding="utf-8")
+
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        sys.exit("usage: gen_results.py OUTDIR")
+    main(Path(sys.argv[1]))

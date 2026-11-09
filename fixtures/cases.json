@@ -1,0 +1,29 @@
+{
+  "_comment": "Hand-derived. attrs: ordered [key, value] pairs passed to toHtmlTagArray; props: Twig render properties. Payloads are inert placeholders evaluated only by the local model.",
+  "cases": [
+    {"id": "p01_value_arith", "class": "pos", "attrs": [["value", "{{ 7*7 }}"]], "props": {},
+     "hand": {"pre": [["value", "49"]], "post": [["value", "{{ 7*7 }}"]]}},
+    {"id": "p02_value_constant_email", "class": "pos", "attrs": [["type", "email"], ["value", "{{ constant('PHP_VERSION') }}@example.com"]], "props": {},
+     "hand": {"pre": [["type", "email"], ["value", "<PHP_VERSION>@example.com"]], "post": [["type", "email"], ["value", "{{ constant('PHP_VERSION') }}@example.com"]]}},
+    {"id": "p03_name_arith", "class": "pos", "attrs": [["name", "f{{ 6*7 }}"]], "props": {},
+     "hand": {"pre": [["name", "f42"]], "post": [["name", "f{{ 6*7 }}"]]}},
+    {"id": "p04_id_vendor_path", "class": "pos", "attrs": [["id", "{{ constant('CRAFT_VENDOR_PATH') }}"]], "props": {},
+     "hand": {"pre": [["id", "<CRAFT_VENDOR_PATH>"]], "post": [["id", "{{ constant('CRAFT_VENDOR_PATH') }}"]]}},
+    {"id": "p05_value_malformed", "class": "pos", "attrs": [["value", "{{ 7*"]], "props": {},
+     "hand": {"pre": "TWIG_ERROR", "post": [["value", "{{ 7*"]]}},
+    {"id": "p06_key_renders_to_value", "class": "pos", "attrs": [["{{ 'val' ~ 'ue' }}", "{{ 7*7 }}"]], "props": {},
+     "hand": {"pre": [["value", "49"]], "post": [["value", "{{ 7*7 }}"]]}},
+    {"id": "n01_admin_class_template", "class": "neg", "attrs": [["class", "field-{{ handle }}"]], "props": {"handle": "email"},
+     "hand": {"pre": [["class", "field-email"]], "post": [["class", "field-email"]]}},
+    {"id": "n02_plain_placeholder", "class": "neg", "attrs": [["placeholder", "Your email"]], "props": {},
+     "hand": {"pre": [["placeholder", "Your email"]], "post": [["placeholder", "Your email"]]}},
+    {"id": "n03_plain_value", "class": "neg", "attrs": [["value", "lab@example.com"]], "props": {},
+     "hand": {"pre": [["value", "lab@example.com"]], "post": [["value", "lab@example.com"]]}},
+    {"id": "n04_php_empty_zero", "class": "neg", "attrs": [["value", "0"]], "props": {},
+     "hand": {"pre": [["value", "0"]], "post": [["value", "0"]]}},
+    {"id": "n05_data_attr_still_rendered", "class": "neg", "attrs": [["data-n", "{{ 7*7 }}"]], "props": {},
+     "hand": {"pre": [["data-n", "49"]], "post": [["data-n", "49"]]}},
+    {"id": "o01_capitalised_value_key", "class": "observation", "attrs": [["Value", "{{ 7*7 }}"]], "props": {},
+     "hand": {"pre": [["Value", "49"]], "post": [["Value", "49"]]}}
+  ]
+}
