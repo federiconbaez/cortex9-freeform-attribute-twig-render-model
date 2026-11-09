@@ -1,10 +1,12 @@
 """``Attributes::toHtmlTagArray()`` before and after commit 5f75553.
 
-Diff lines (``cat -n`` of the saved diff):
-  L17 (+)  EXCLUDED_TWIG_ATTRIBUTES = ['value', 'name', 'id']
-  L299     $key = $twig->render($key, $properties);
-  L300 (-) $value = !empty($value) ? $twig->render($value, $properties) : $value;
-  L302-304 (+) if (!empty($value) && !\\in_array($key, EXCLUDED, true)) { render }
+Citations are real ``cat -n`` lines of the upstream diff of 5f75553 (not
+in this repo; see sources/diffs.tsv and tests/test_citations.py):
+  5f755532:L9      post adds a constant listing the keys value, name, id
+  5f755532:L16     every key is rendered as a Twig template (both versions)
+  5f755532:L17     pre: every non-empty value is rendered
+  5f755532:L19-21  post: a non-empty value is rendered only when its key is
+                   not in that list (strict, case-sensitive in_array)
 Only this loop is modelled; how Freeform builds the final HTML is not.
 """
 from __future__ import annotations
@@ -26,14 +28,14 @@ def to_html_tag_array(version: str, attrs: list, props: dict) -> list:
         raise ValueError(version)
     out = []
     for key, value in attrs:
-        key = twig.render(key, props)  # L299, both versions
+        key = twig.render(key, props)  # 5f755532:L16, both versions
         if version == "pre":
-            render = not php_empty(value)  # L300
-            rule = "L300"
+            render = not php_empty(value)  # 5f755532:L17
+            rule = "5f755532:L17"
         else:
-            # L302: in_array(..., true) is a strict, case-sensitive match
+            # 5f755532:L19: in_array(..., true) is a strict, case-sensitive match
             render = not php_empty(value) and key not in EXCLUDED_TWIG_ATTRIBUTES
-            rule = "L302-304"
+            rule = "5f755532:L19-21"
         if render:
             new = twig.render(value, props)
             out.append((key, new, f"RENDERED:{rule}"))

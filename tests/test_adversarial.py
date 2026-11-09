@@ -48,7 +48,7 @@ class TwigEdges(unittest.TestCase):
 
 class ExclusionEdges(unittest.TestCase):
     def test_exclusion_is_case_sensitive(self):
-        # strict in_array (diff L302): "Value" is not excluded. Observation
+        # strict in_array (5f755532:L19): "Value" is not excluded. Observation
         # about the model only; HTML attribute names are case-insensitive.
         self.assertEqual(post([("Value", "{{ 7*7 }}")])[1][0][1], "49")
 

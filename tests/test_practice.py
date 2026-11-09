@@ -27,8 +27,9 @@ class Practice(unittest.TestCase):
         self.assertEqual(a.evaluate("pre", [("value", "{{ 7*")], {})[0], "TWIG_ERROR")
 
     def test_level_6_php_empty(self):
-        self.assertEqual(both([("value", "0")]), [[("value", "0", "LITERAL:L300")],
-                                                  [("value", "0", "LITERAL:L302-304")]])
+        self.assertEqual(both([("value", "0")]),
+                         [[("value", "0", "LITERAL:5f755532:L17")],
+                          [("value", "0", "LITERAL:5f755532:L19-21")]])
 
     def test_level_7_other_keys(self):
         self.assertEqual(both([("data-n", "{{ 7*7 }}")])[1][0][1], "49")

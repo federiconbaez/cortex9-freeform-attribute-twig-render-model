@@ -1,0 +1,6 @@
+tag	start	end	sha256	what
+5f755532	9	9	a66417be9dac39a45b994a93d2c01862c560ab13930bcbd91fffd3e9b5cc5e63	post: excluded keys
+5f755532	16	16	eb79d67ba3e54fd043c257a92db17457bcbc3eb0c937479a00e383169978ddad	keys always rendered (context)
+5f755532	17	17	3c4ae5cb1a173ce8d30b508464ba1151daf758a76b536f41d455eb00ac25f3b0	pre: every non-empty value rendered
+5f755532	19	19	3330b38bb604f3ea837bee7a8bf38340e8ccaa0ee22658342f107b399001fbbc	post: strict in_array
+5f755532	19	21	9f38fcb89c4c04a5f192bc0b2de2651c4f64834188e4fd241510f8bd6ff445f0	post: render unless key is excluded

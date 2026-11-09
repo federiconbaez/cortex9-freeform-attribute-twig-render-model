@@ -27,5 +27,5 @@ def rules(case: dict, version: str) -> str:
     label, rows = attributes.evaluate(
         version, [tuple(a) for a in case["attrs"]], case["props"])
     if label == "TWIG_ERROR":
-        return "L300"
+        return "5f755532:L17"
     return ";".join(d for _k, _v, d in rows)

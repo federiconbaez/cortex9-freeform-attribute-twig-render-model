@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Independent derivation of fixtures/expected.tsv (does not import src/).
 
-From the saved diff of commit 5f75553: keys are always rendered (L299);
-before, every non-empty value was rendered (L300); after, values under the
-keys value/name/id (strict in_array, L17 + L302) are left as written. Twig
+From the saved diff of commit 5f75553: keys are always rendered
+(5f755532:L16); before, every non-empty value was rendered (5f755532:L17);
+after, values under the keys value/name/id (strict in_array, 5f755532:L9 +
+5f755532:L19) are left as written. Twig
 is re-derived with Python's ast module restricted to int/str constants,
 + - * and a whitelisted constant() call, after mapping `~` to `+` on
 strings. It never calls eval.
